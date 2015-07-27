@@ -14,13 +14,20 @@
 		<!--{{hour}}-->
 		<div class='col-lg-4'>
 			<!--<div class="col-lg-4 col-lg-offset-4">-->
-				<div style="margin-top:20px;margin-bottom:5px" class="alert alert-success" role="alert"><h2>{{hour.name | hourDisplay}}</h2></div>
-				<div ng-repeat="slot in hour.slots">
+				<div style="margin-top:20px;margin-bottom:5px" class="alert alert-success" role="alert"><h2 style="float:left">{{hour.name | hourDisplay}}</h2>
+					<a class="btn btn-danger" style="float:right" data-ng-click="remove(hour);">
+						<i class="glyphicon glyphicon-trash"></i>
+					</a>
+					<div ng-repeat="timeslot in hour.slots">
+						<a class='btn btn-primary' style='width:100%' data-ng-click='addEmployee(timeslot)'>{{timeslot.name}} - {{8 - timeslot.employees.length}} slots available</a>
+					</div>
+				</div>
+				<!--<div ng-repeat="slot in hour.slots">
 					<button class="btn" 
 						ng-class="{ true: 'btn-primary', false: 'btn-danger disabled' }[(8 - x.people.length) > 0]" 
 						style="margin-bottom: 2px;width:100%" 
 						ng-click="assignSlot(person,hour.name,slot.name)">{{hour.name}}:{{slot.name}} - Available slots {{8 - slot.people.length}}</button>
-				</div>
+				</div>-->
 			<!--</div>-->
 		</div>
 		

@@ -18,30 +18,97 @@ exports.index = function(req, res) {
 };
 
 exports.list = function(req, res){
-	Hour.find(function(err, posts){
+	Hour.find({}).populate('slots').exec(function(err, posts){
 		res.json(posts);
 	});
 };
 
 exports.create = function(req, res){
-	var hour = new Hour();
-	hour.name = 7;
-};
+	var hour = new Hour(req.body);
+	var slots = ['00','15','30','45'];
+	slots.forEach(function(x,y){
+		var newslot = new TimeSlot({
+			name: x
+		});
+		newslot.save();
+		hour.slots.push(newslot);
+	});
 	
+	hour.save(function(err, data){
+		if(err){
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			console.log(data.slots.length);
+			res.json(data);
+		}
+		
+	});
+};
 
-/*
-exports.create = function(req, res) {
-	var article = new Article(req.body);
-	article.user = req.user;
-
-	article.save(function(err) {
+exports.delete = function(req, res){
+	var hour = req.hour;
+	hour.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(article);
+			res.json(hour);
 		}
 	});
 };
-*/
+
+exports.hourById = function(req, res, next, id) {
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(400).send({
+			message: 'Hour is invalid'
+		});
+	}
+
+	Hour.findById(id).exec(function(err, hour) {
+		if (err) return next(err);
+		if (!hour) {
+			return res.status(404).send({
+				message: 'Hour not found'
+			});
+		}
+		req.hour = hour;
+		next();
+	});
+};
+
+exports.slotById = function(req, res, next, id) {
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(400).send({
+			message: 'Slot is invalid'
+		});
+	}
+
+	TimeSlot.findById(id).exec(function(err, slot) {
+		if (err) return next(err);
+		if (!slot) {
+			return res.status(404).send({
+				message: 'Slot not found'
+			});
+		}
+		req.slot = slot;
+		next();
+	});
+};
+
+
+exports.addEmployee = function(req, res){
+	console.log(req);
+	var slot = req.slot;
+	slot = _.extend(slot, req.body);
+	slot.save();
+	
+};
+
+exports.read = function(req, res) {
+	res.json(req.slot);
+};

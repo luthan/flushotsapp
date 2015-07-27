@@ -57,16 +57,17 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var article = req.article;
+	console.log(req);
 
-	article.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(article);
-		}
-	});
+	// article.remove(function(err) {
+	// 	if (err) {
+	// 		return res.status(400).send({
+	// 			message: errorHandler.getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.json(article);
+	// 	}
+	// });
 };
 
 /**

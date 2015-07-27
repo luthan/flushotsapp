@@ -7,6 +7,12 @@ module.exports = function(app) {
 	app.route('/hours')
 		.get(core.list)
 		.post(core.create);
+	app.route('/hours/:hourId')
+		.delete(core.delete);
+	app.route('/slots/:slotId')
+		.get(core.read)
+		.put(core.addEmployee);
 		
-	// app.param('hourId', articles.articleByID);
+	app.param('hourId', core.hourById);
+	app.param('slotId', core.slotById);
 };

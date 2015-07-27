@@ -15,6 +15,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		.state('hours',{
 			url: '/hours',
 			templateUrl: 'modules/core/views/home.client.view.html'
+		})
+		.state('deletehours',{
+			url: '/hours/:hourId',
+			templateUrl: 'modules/core/views/home.client.view.html'
 		});
 	}
 ]);
