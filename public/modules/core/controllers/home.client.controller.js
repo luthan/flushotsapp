@@ -21,7 +21,6 @@ angular.module('core').controller('HomeController', ['$scope', '$cookies','$http
 					angular.forEach(tempStore, function(hour){
 						
 						angular.forEach(hour.slots, function(slot){
-							console.log(slot.employees.indexOf($scope.employee['sb-userid']));
 							if(slot.employees.indexOf($scope.employee['sb-userid']) > -1){
 								$scope.alreadyExists = true;
 								$scope.takenSlot = slot;
@@ -30,8 +29,6 @@ angular.module('core').controller('HomeController', ['$scope', '$cookies','$http
 						});
 					});
 					$scope.hours = tempStore;
-					console.log($scope.takenSlot);
-					console.log($scope.alreadyExists);
 				});
 				
 			});

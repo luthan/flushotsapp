@@ -8,7 +8,7 @@ angular.module('core').factory('Socket', ['socketFactory',
 		// Public API
 		return socketFactory({
 			prefix: '',
-			ioSocket: io.connect('http://localhost:3000')
+			ioSocket: io.connect('http://flushots.smithbucklin.com:3000')
 		});
 	}
 ]);
