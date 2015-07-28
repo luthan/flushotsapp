@@ -101,12 +101,17 @@ exports.slotById = function(req, res, next, id) {
 
 
 exports.addEmployee = function(req, res){
+	// update timeSlot document
 	var slot = req.slot;
 	slot = _.extend(slot, req.body);
 	slot.save();
 	
+	// send socket trigger to update clients' screens
 	var socketio = req.app.get('socketio');
-	socketio.sockets.emit('slot.updated', slot);	
+	socketio.sockets.emit('slot.updated');
+	
+	//send response
+	res.json(slot);	
 };
 
 exports.read = function(req, res) {

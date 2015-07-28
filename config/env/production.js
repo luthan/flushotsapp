@@ -2,7 +2,7 @@
 
 module.exports = {
 	db: {
-		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean',
+		uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'mongodb://38.106.212.88/mean-dev') + '/flushots-db',
 		options: {
 			user: '',
 			pass: ''
@@ -24,10 +24,12 @@ module.exports = {
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
 			],
 			js: [
+				'public/lib/socket.io-client/socket.io.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.min.js',
 				'public/lib/angular-animate/angular-animate.min.js',
 				'public/lib/angular-cookies/angular-cookies.min.js',
+				'public/lib/angular-socket-io/socket.min.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'

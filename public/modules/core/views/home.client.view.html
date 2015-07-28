@@ -1,25 +1,35 @@
-<section data-ng-controller="HomeController" data-ng-init="find()">
-	Hello {{employee.n['given-name']}}
-	
-	<form>
+<section data-ng-controller="HomeController">
+	<div class='row'>
+		<div class='col-lg-6'>
+			<h2>Hello {{employee.n['given-name']}}</h2>
+		</div>
+		<div class='col-lg-6'>
+			<h2 data-ng-show="takenSlot != 'none'">
+				Your time slot is {{takenSlot | timeSlotDisplay }}
+			</h2>
+		</div>
+	</div>
+	<!--<form>
 		<input ng-model='hourName'>
 		<button ng-click="createHour(newHour)">Add</button>
-	</form>
-	<br>
+	</form>-->
+	<!--<br>
 	<form><input ng-model="person">
 		<!--<button ng-click="loadPerson(person)">Load Person</button>-->
-	</form>
-	Your time slot is {{timeSlot | timeSlotDisplay }}
+	<!--</form>-->
+	
 	<div ng-repeat="hour in hours">
 		<!--{{hour}}-->
 		<div class='col-lg-4'>
 			<!--<div class="col-lg-4 col-lg-offset-4">-->
 				<div style="margin-top:20px;margin-bottom:5px" class="alert alert-success" role="alert"><h2 style="float:left">{{hour.name | hourDisplay}}</h2>
-					<a class="btn btn-danger" style="float:right" data-ng-click="remove(hour);">
+					<!--<a class="btn btn-danger" style="float:right" data-ng-click="remove(hour);">
 						<i class="glyphicon glyphicon-trash"></i>
-					</a>
+					</a>-->
 					<div ng-repeat="timeslot in hour.slots">
-						<a class='btn btn-primary' style='width:100%' data-ng-click='addEmployee(timeslot)'>{{timeslot.name}} - {{8 - timeslot.employees.length}} slots available</a>
+						<a class='btn' 
+							data-ng-class="{true:'btn-primary', false:'btn-danger disabled'}[((8-timeslot.employees.length > 0) && (alreadyExists !== true)) || timeslot._id == takenSlot._id]" 
+							style='width:100%' data-ng-click='addEmployee(timeslot)'>{{timeslot.name}} - {{8 - timeslot.employees.length}} slots available</a>
 					</div>
 				</div>
 				<!--<div ng-repeat="slot in hour.slots">
