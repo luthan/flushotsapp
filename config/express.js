@@ -16,6 +16,7 @@ var fs = require('fs'),
 	cookieParser = require('cookie-parser'),
 	helmet = require('helmet'),
 	passport = require('passport'),
+	socketio = require('socket.io'),
 	mongoStore = require('connect-mongo')({
 		session: session
 	}),
@@ -159,6 +160,12 @@ module.exports = function(db) {
 		// Return HTTPS server instance
 		return httpsServer;
 	}
+	
+	// Attach Socket.io
+	var server = http.createServer(app);
+	var io = socketio.listen(server);
+	app.set('socketio', io);
+	app.set('server', server);
 
 	// Return Express server instance
 	return app;

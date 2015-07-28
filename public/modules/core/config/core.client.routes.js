@@ -12,10 +12,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			url: '/',
 			templateUrl: 'modules/core/views/home.client.view.html'
 		})
-		.state('hours',{
-			url: '/hours',
-			templateUrl: 'modules/core/views/home.client.view.html'
-		})
+		// .state('hours',{
+		// 	url: '/hours',
+		// 	templateUrl: 'modules/core/views/home.client.view.html'
+		// })
 		.state('deletehours',{
 			url: '/hours/:hourId',
 			templateUrl: 'modules/core/views/home.client.view.html'

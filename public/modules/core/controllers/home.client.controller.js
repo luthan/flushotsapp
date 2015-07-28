@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', '$cookies','$http', '$location', 'Authentication', 'Hours', 'Slots',
-	function($scope, $cookies, $http, $location, Authentication, Hours, Slots) {
+angular.module('core').controller('HomeController', ['$scope', '$cookies','$http', '$location', 'Authentication', 'Hours', 'Slots', 'Socket',
+	function($scope, $cookies, $http, $location, Authentication, Hours, Slots, Socket) {
 		// This provides Authentication context.
 		//$scope.authentication = Authentication;
 		var url = 'http://intranet.smithbucklin.com/util/info/getemployee/';
@@ -39,48 +39,27 @@ angular.module('core').controller('HomeController', ['$scope', '$cookies','$http
 			}
 		};
 		
+		Socket.on('slot.updated', function() {
+			var x = Hours.query().$promise.then(function(x){
+				$scope.hours = x;
+			});
+			
+		});
 		
-		// 		$scope.update = function() {
-		// 	var article = $scope.article;
-
-		// 	article.$update(function() {
-		// 		$location.path('articles/' + article._id);
-		// 	}, function(errorResponse) {
-		// 		$scope.error = errorResponse.data.message;
-		// 	});
-		// };
-		
-		$scope.addEmployee = function(slot){
-			var slotToUpdate = {};
+		$scope.addEmployee = function(slot){			
 			Slots.get({
 				slotId: slot._id
 			}).$promise.then(function(x){
-				slotToUpdate = x;
-				slotToUpdate.employees.push("Paul");
-				slotToUpdate.$update(function(){
-					$location.path('slots/' + slot._id);
-				});
-				$scope.hours = Hours.query();
-			});
-			
-			
-			
-			
-			
-			// slotToUpdate.$update(function(){
-			// 	console.log("test");
-			// 	$location.path('slots/' + slot._id);
-			// }, function(errorResponse){
-			// 	$scope.error = errorResponse.data.message;
-			// });
-			
+				x.employees.push('Paul');
+				x.$update();
+			});			
 		};
 		
-		$scope.findOne = function() {
-			$scope.slot = Slots.get({
-				slotId: $stateParams.slotId
-			});
-		};
+		// $scope.findOne = function() {
+		// 	$scope.slot = Slots.get({
+		// 		slotId: $stateParams.slotId
+		// 	});
+		// };
 		
 	}
 ]);

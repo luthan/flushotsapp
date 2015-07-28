@@ -40,7 +40,6 @@ exports.create = function(req, res){
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(data.slots.length);
 			res.json(data);
 		}
 		
@@ -102,11 +101,12 @@ exports.slotById = function(req, res, next, id) {
 
 
 exports.addEmployee = function(req, res){
-	console.log(req);
 	var slot = req.slot;
 	slot = _.extend(slot, req.body);
 	slot.save();
 	
+	var socketio = req.app.get('socketio');
+	socketio.sockets.emit('slot.updated', slot);	
 };
 
 exports.read = function(req, res) {
